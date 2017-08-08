@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SmartMenu_Process</string>
+
+    <string name="input_desk_num">请输入座位号</string>
+    <string name="complete">完成</string>
+    <string name="waiting">请等待</string>
+    <string name="no_network">没有网络</string>
+</resources>
