@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.util.ArrayList;
+
 /**
  * Created by luyan on 31/05/2017.
  */
@@ -209,5 +211,5 @@ public class ORDERITEM implements Parcelable {
         this.isRead = isRead;
     }
 
-    
+
 }

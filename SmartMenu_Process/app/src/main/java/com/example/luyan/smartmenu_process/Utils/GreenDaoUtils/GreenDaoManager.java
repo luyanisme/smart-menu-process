@@ -2,8 +2,8 @@ package com.example.luyan.smartmenu_process.Utils.GreenDaoUtils;
 
 
 import com.example.luyan.smartmenu_process.Common.MyApplication;
-import com.example.luyan.smartmenu_shop.GreenDao.DaoMaster;
-import com.example.luyan.smartmenu_shop.GreenDao.DaoSession;
+import com.example.luyan.smartmenu_process.GreenDao.DaoMaster;
+import com.example.luyan.smartmenu_process.GreenDao.DaoSession;
 
 /**
  * Created by luyan on 2016/7/12.

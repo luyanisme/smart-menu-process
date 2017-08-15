@@ -6,7 +6,8 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.example.luyan.smartmenu_process"
-        minSdkVersion 21
+        minSdkVersion 17
+//        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -22,7 +23,7 @@ android {
 
 greendao {
     schemaVersion 1
-    daoPackage 'com.example.luyan.smartmenu_shop.GreenDao'
+    daoPackage 'com.example.luyan.smartmenu_process.GreenDao'
     targetGenDir 'src/main/java'
 }
 

@@ -16,8 +16,6 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 public class OrderModel {
     /* 持有私有静态实例，防止被引用，此处赋值为null，目的是实现延迟加载 */
     private static OrderModel instance = null;
-    private int index = 1;//页码
-    private int pageSize = 10;
 
     /* 私有构造方法，防止被实例化 */
     private OrderModel() {
@@ -33,13 +31,8 @@ public class OrderModel {
         return instance;
     }
 
-    public void goNextPage(ZHHttpCallBack httpCallBack) {
-        index ++;
-        ZHHttpHelper.getInstance().get(ServerConfig.HTTP + "getOrders?shopId="+UserModel.getInstance().getShopId()+"&page=" + index + "&pageSize=" + pageSize, null, httpCallBack);
+    public void getNowDayOrders(ZHHttpCallBack httpCallBack){
+        ZHHttpHelper.getInstance().get(ServerConfig.HTTP + "getNowdayOrders?shopId="+UserModel.getInstance().getShopId(), null, httpCallBack);
     }
 
-    public void firstPage(ZHHttpCallBack httpCallBack) {
-        index = 1;
-        ZHHttpHelper.getInstance().get(ServerConfig.HTTP + "getOrders?shopId="+UserModel.getInstance().getShopId()+"&page=" + index + "&pageSize=" + pageSize, null, httpCallBack);
-    }
 }

@@ -1,7 +1,7 @@
 package com.example.luyan.smartmenu_process.Utils.GreenDaoUtils;
 
 
-import com.example.luyan.smartmenu_shop.GreenDao.DaoSession;
+import com.example.luyan.smartmenu_process.GreenDao.DaoSession;
 
 import org.greenrobot.greendao.query.WhereCondition;
 

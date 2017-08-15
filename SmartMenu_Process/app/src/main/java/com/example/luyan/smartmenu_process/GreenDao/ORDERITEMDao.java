@@ -1,4 +1,4 @@
-package com.example.luyan.smartmenu_shop.GreenDao;
+package com.example.luyan.smartmenu_process.GreenDao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;

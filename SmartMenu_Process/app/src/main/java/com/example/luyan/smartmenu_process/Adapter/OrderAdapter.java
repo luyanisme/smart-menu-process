@@ -64,7 +64,7 @@ public class OrderAdapter extends BaseAdapter {
         } else {
             holder.standardProperty.setVisibility(View.GONE);
         }
-        if (caseItems.get(position).getCaseProgress() == 3) {
+        if (caseItems.get(position).getCaseProgress() == 2) {
             holder.completeLine.setVisibility(View.VISIBLE);
             holder.complete.setVisibility(View.GONE);
         } else {
