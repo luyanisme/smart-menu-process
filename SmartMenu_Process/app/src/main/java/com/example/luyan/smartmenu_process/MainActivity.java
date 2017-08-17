@@ -55,22 +55,6 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
     private int orderSelectIndex = 0;
     private KProgressHUD hud;
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.ACTION_TIME_TICK.equals(intent.getAction())) {
-                SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
-                String time = df.format(new Date());
-                if (time.equals("06:00:00")) {
-                    GreenDaoUtils.clearDB();
-                }
-            } else if (intent.ACTION_TIME_CHANGED.equals(intent.getAction())) {
-
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +74,6 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
         hud.show();
         getOrdersData();
         initWebSocket();
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_TIME_TICK);
-        filter.addAction(Intent.ACTION_TIME_CHANGED);
-        registerReceiver(broadcastReceiver, filter);
     }
 
     private void getOrdersData() {
@@ -120,13 +99,6 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
         });
     }
 
-    private void readDataFromDB() {
-        List<Object> orders = GreenDaoUtils.queryObjects(ORDERITEM.class, null);
-        for (int i = 0; i < orders.size(); i++) {
-            orderItems.add((ORDERITEM) orders.get(i));
-        }
-    }
-
     private void initGrid() {
         deskAdapter = new DeskAdapter(this, orderItems);
         deskGridView.setAdapter(deskAdapter);
@@ -134,7 +106,7 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 orderSelectIndex = i;
-                if (!orderItems.get(i).getIsRead()){
+                if (!orderItems.get(i).getIsRead()) {
                     orderItems.get(i).setIsRead(true);
                     orderItems.get(i).setClientType(2);
                     WebSocketService.sendMsg(new Gson().toJson(orderItems.get(orderSelectIndex)));
@@ -154,6 +126,19 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
         orderAdapter = new OrderAdapter(this, caseitems);
         orderAdapter.setDelegate(this);
         orderList.setAdapter(orderAdapter);
+        if (orderItems.size() == 0) {
+            return;
+        }
+        caseitems.clear();
+        CASEITEM[] items = new Gson().fromJson(orderItems.get(0).getOrderContent(), CASEITEM[].class);
+        for (int j = 0; j < items.length; j++) {
+            caseitems.add(items[j]);
+        }
+        orderAdapter.notifyDataSetChanged();
+        if (!orderItems.get(0).getIsRead()) {
+            orderItems.get(0).setIsRead(true);
+            deskAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initWebSocket() {
@@ -185,7 +170,6 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
                                     return;
                                 }
                             }
-//                            GreenDaoUtils.insertObject(orderitem);
                             orderItems.add(orderitem);
                             deskAdapter.notifyDataSetChanged();
                             break;
@@ -198,7 +182,7 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
 
     @Override
     public void tapButton(int index) {
-        caseitems.get(index).setCaseProgress(2);
+        caseitems.get(index).setCaseProgress(1);
         orderAdapter.notifyDataSetChanged();
         orderItems.get(orderSelectIndex).setOrderContent(new Gson().toJson(caseitems));
         orderItems.get(orderSelectIndex).setClientType(2);
