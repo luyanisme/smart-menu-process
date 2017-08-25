@@ -22,6 +22,7 @@ public class OrderAdapter extends BaseAdapter {
 
     private ArrayList<CASEITEM> caseItems;
     private LayoutInflater mInflater;
+    private Context context;
     private ButtonDelegate delegate;
 
     @Override
@@ -41,7 +42,7 @@ public class OrderAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        OrderAdapter.ViewHolder holder;
+        final OrderAdapter.ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.order_list_item, null);
             holder = new OrderAdapter.ViewHolder();
@@ -50,7 +51,7 @@ public class OrderAdapter extends BaseAdapter {
             holder.caseNum = (TextView) convertView.findViewById(R.id.case_num);
             holder.standardProperty = (TextView) convertView.findViewById(R.id.standard_property);
             holder.completeLine = (ImageView) convertView.findViewById(R.id.complete_line);
-            holder.complete = (TextView) convertView.findViewById(R.id.complete);
+            holder.operateBtn = (TextView) convertView.findViewById(R.id.operate_btn);
             convertView.setTag(holder);//绑定ViewHolder对象
         } else {
             holder = (OrderAdapter.ViewHolder) convertView.getTag();//取出ViewHolder对象
@@ -64,28 +65,47 @@ public class OrderAdapter extends BaseAdapter {
         } else {
             holder.standardProperty.setVisibility(View.GONE);
         }
-        if (caseItems.get(position).getCaseProgress() == 2) {
-            holder.completeLine.setVisibility(View.VISIBLE);
-            holder.complete.setVisibility(View.GONE);
-        } else {
+
+        if (caseItems.get(position).getCaseProgress() == 0) {
             holder.completeLine.setVisibility(View.GONE);
-            holder.complete.setVisibility(View.VISIBLE);
+            holder.operateBtn.setVisibility(View.VISIBLE);
+            holder.operateBtn.setText(context.getResources().getString(R.string.wine));
+            holder.operateBtn.setBackground(context.getResources().getDrawable(R.drawable.button_radius_bg));
         }
 
-        holder.complete.setOnClickListener(new View.OnClickListener() {
+        if (caseItems.get(position).getCaseProgress() == 1) {
+            holder.completeLine.setVisibility(View.GONE);
+            holder.operateBtn.setVisibility(View.VISIBLE);
+            holder.operateBtn.setText(context.getResources().getString(R.string.complete));
+            holder.operateBtn.setBackground(context.getResources().getDrawable(R.drawable.button_complete_radius_bg));
+        }
+
+        if (caseItems.get(position).getCaseProgress() == 2) {
+            holder.completeLine.setVisibility(View.VISIBLE);
+            holder.operateBtn.setVisibility(View.GONE);
+        }
+
+        holder.operateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (delegate != null) {
-                    delegate.tapButton(position);
+                    if (holder.operateBtn.getText().toString().equals(context.getResources().getString(R.string.wine))){
+                        delegate.tapOperateButton(position,1);
+                    } else {
+                        delegate.tapOperateButton(position,2);
+                    }
+
                 }
             }
         });
+
         return convertView;
     }
 
     public OrderAdapter(Context mContext, ArrayList<CASEITEM> caseItems) {
         this.mInflater = LayoutInflater.from(mContext);
         this.caseItems = caseItems;
+        this.context = mContext;
     }
 
     /**
@@ -96,7 +116,7 @@ public class OrderAdapter extends BaseAdapter {
         public TextView caseNum;
         public TextView standardProperty;
         public ImageView completeLine;
-        public TextView complete;
+        public TextView operateBtn;
     }
 
     public ButtonDelegate getDelegate() {
@@ -108,6 +128,6 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     public interface ButtonDelegate {
-        public void tapButton(int index);
+        public void tapOperateButton(int index, int progress);
     }
 }

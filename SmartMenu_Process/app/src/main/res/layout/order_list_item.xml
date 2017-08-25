@@ -60,12 +60,12 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/complete"
+            android:id="@+id/operate_btn"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:textColor="@color/colorWhite"
             android:textSize="18dp"
-            android:text="@string/complete"
+            android:text="@string/wine"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"

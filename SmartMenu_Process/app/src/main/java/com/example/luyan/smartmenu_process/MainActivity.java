@@ -159,18 +159,35 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
 
                         /*订单*/
                         case 1:
-                            ORDERITEM orderitem = new Gson().fromJson(msg.getData().get("notice").toString(), ORDERITEM.class);
-                            orderitem.setIsRead(false);
+                            ORDERITEM clientOrderitem = new Gson().fromJson(msg.getData().get("notice").toString(), ORDERITEM.class);
+                            clientOrderitem.setIsRead(false);
                             for (int i = 0; i < orderItems.size(); i++) {
-                                if (orderitem.getDeskId().equals(orderItems.get(i).getDeskId())) {
-                                    orderItems.get(i).setOrderContent(StringUtil.contactOrders(orderItems.get(i).getOrderContent(), orderitem.getOrderContent())
+                                if (clientOrderitem.getDeskId().equals(orderItems.get(i).getDeskId())) {
+                                    orderItems.get(i).setOrderContent(StringUtil.contactOrders(orderItems.get(i).getOrderContent(), clientOrderitem.getOrderContent())
                                     );
                                     orderItems.get(i).setIsRead(false);
                                     deskAdapter.notifyDataSetChanged();
                                     return;
                                 }
                             }
-                            orderItems.add(orderitem);
+                            orderItems.add(clientOrderitem);
+                            deskAdapter.notifyDataSetChanged();
+                            break;
+
+                        /*订单*/
+                        case 2:
+                            ORDERITEM severOrderitem = new Gson().fromJson(msg.getData().get("notice").toString(), ORDERITEM.class);
+                            severOrderitem.setIsRead(false);
+                            for (int i = 0; i < orderItems.size(); i++) {
+                                if (severOrderitem.getDeskId().equals(orderItems.get(i).getDeskId())) {
+                                    orderItems.get(i).setOrderContent(StringUtil.contactOrders(orderItems.get(i).getOrderContent(), severOrderitem.getOrderContent())
+                                    );
+                                    orderItems.get(i).setIsRead(false);
+                                    deskAdapter.notifyDataSetChanged();
+                                    return;
+                                }
+                            }
+                            orderItems.add(severOrderitem);
                             deskAdapter.notifyDataSetChanged();
                             break;
                     }
@@ -181,10 +198,11 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
     }
 
     @Override
-    public void tapButton(int index) {
-        caseitems.get(index).setCaseProgress(1);
+    public void tapOperateButton(int index, int progress) {
+        caseitems.get(index).setCaseProgress(progress);
         orderAdapter.notifyDataSetChanged();
         orderItems.get(orderSelectIndex).setOrderContent(new Gson().toJson(caseitems));
+        orderItems.get(orderSelectIndex).setNoticeType((long) 1);
         orderItems.get(orderSelectIndex).setClientType(2);
         WebSocketService.sendMsg(new Gson().toJson(orderItems.get(orderSelectIndex)));
     }
