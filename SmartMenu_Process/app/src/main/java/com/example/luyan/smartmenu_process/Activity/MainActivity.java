@@ -1,4 +1,4 @@
-package com.example.luyan.smartmenu_process;
+package com.example.luyan.smartmenu_process.Activity;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -25,6 +25,7 @@ import com.example.luyan.smartmenu_process.MetaData.ORDERITEM;
 import com.example.luyan.smartmenu_process.MetaData.RESPONSE;
 import com.example.luyan.smartmenu_process.MetaData.RESULT;
 import com.example.luyan.smartmenu_process.Model.OrderModel;
+import com.example.luyan.smartmenu_process.R;
 import com.example.luyan.smartmenu_process.Service.WebSocketService;
 import com.example.luyan.smartmenu_process.Utils.GreenDaoUtils.GreenDaoUtils;
 import com.example.luyan.smartmenu_process.Utils.StringUtil;
@@ -77,14 +78,11 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
     }
 
     private void getOrdersData() {
-        OrderModel.getInstance().getNowDayOrders(new ZHHttpCallBack<RESPONSE<ORDERITEM>>() {
+        OrderModel.getInstance().getNowDayOrders(new ZHHttpCallBack<RESPONSE<List<ORDERITEM>>>() {
             @Override
             public void onSuccess(int statusCode, String rawJsonResponse, RESPONSE response) {
                 if (response.getStatus() == 0) {
-                    for (int i = 0; i < response.getData().size(); i++) {
-
-                    }
-                    orderItems.addAll(response.getData());
+                    orderItems.addAll((ArrayList<ORDERITEM>)response.getData());
                     initGrid();
                     initList();
                     orderAdapter.notifyDataSetChanged();

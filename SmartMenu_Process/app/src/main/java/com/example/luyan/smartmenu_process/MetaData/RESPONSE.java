@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class RESPONSE<T> implements Parcelable{
     private int status;//返回状态信息
     private String msg;//返回信息
-    private ArrayList<T> data;//返回数据
+    private T data;//返回数据
 
     protected RESPONSE(Parcel in) {
         status = in.readInt();
@@ -58,11 +58,11 @@ public class RESPONSE<T> implements Parcelable{
         this.msg = msg;
     }
 
-    public ArrayList<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(ArrayList<T> data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

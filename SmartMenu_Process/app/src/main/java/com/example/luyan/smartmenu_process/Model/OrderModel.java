@@ -32,7 +32,7 @@ public class OrderModel {
     }
 
     public void getNowDayOrders(ZHHttpCallBack httpCallBack){
-        ZHHttpHelper.getInstance().get(ServerConfig.HTTP + "getNowdayOrders?shopId="+UserModel.getInstance().getShopId(), null, httpCallBack);
+        ZHHttpHelper.getInstance().get(ServerConfig.HTTP + "getNowdayOrders?shopId="+UserModel.getInstance().getUserinfo().getShopId(), null, httpCallBack);
     }
 
 }

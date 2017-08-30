@@ -6,4 +6,11 @@
     <string name="wine">配菜</string>
     <string name="waiting">请等待</string>
     <string name="no_network">没有网络</string>
+
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+    <string name="account">账号</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="logout">注销</string>
 </resources>
