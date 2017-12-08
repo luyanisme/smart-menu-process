@@ -61,6 +61,15 @@
                 android:text="1号桌"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/x12" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:src="@drawable/refresh_icon"/>
         </RelativeLayout>
 
         <ListView

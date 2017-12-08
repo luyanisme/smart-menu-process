@@ -22,6 +22,7 @@ import com.example.luyan.smartmenu_process.Model.UserModel;
 import com.example.luyan.smartmenu_process.R;
 import com.example.luyan.smartmenu_process.Utils.AESUtils;
 import com.example.luyan.smartmenu_process.Utils.IntentUtils;
+import com.example.luyan.smartmenu_process.Utils.SpeechUtils;
 import com.example.luyan.smartmenu_process.Utils.ZHHttpUtils.ZHHttpCallBack;
 import com.example.luyan.smartmenu_process.Widgt.ToastWidgt;
 import com.example.luyan.smartmenu_process.Widgt.UIEditTextWithDelete;
@@ -54,6 +55,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             password.setText(usp.getString("upswd", null));
             checkboxButton.setChecked(true);
         }
+        SpeechUtils.initSpeech(this);
     }
 
     /*清除状态栏背景色*/

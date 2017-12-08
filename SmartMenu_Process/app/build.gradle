@@ -41,4 +41,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/autobahn-0.5.0.jar')
     compile files('libs/bcprov-jdk15-143.jar')
+    compile files('libs/com.baidu.tts_2.3.1.20170808_e39ea89.jar')
 }

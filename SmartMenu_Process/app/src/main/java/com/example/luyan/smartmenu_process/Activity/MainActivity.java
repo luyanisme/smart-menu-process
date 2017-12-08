@@ -28,6 +28,7 @@ import com.example.luyan.smartmenu_process.Model.OrderModel;
 import com.example.luyan.smartmenu_process.R;
 import com.example.luyan.smartmenu_process.Service.WebSocketService;
 import com.example.luyan.smartmenu_process.Utils.GreenDaoUtils.GreenDaoUtils;
+import com.example.luyan.smartmenu_process.Utils.SpeechUtils;
 import com.example.luyan.smartmenu_process.Utils.StringUtil;
 import com.example.luyan.smartmenu_process.Utils.ZHHttpUtils.ZHHttpCallBack;
 import com.example.luyan.smartmenu_process.Widgt.OrderDialog;
@@ -64,6 +65,14 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
         deskGridView = (GridView) findViewById(R.id.desk_grid);
         searchBar = (MaterialSearchBar) findViewById(R.id.searchBar);
         orderList = (ListView) findViewById(R.id.order_list);
+        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hud.show();
+                orderItems.clear();
+                getOrdersData();
+            }
+        });
 
         hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -168,6 +177,7 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
                                     return;
                                 }
                             }
+                            SpeechUtils.speech(clientOrderitem.getDeskNum()+clientOrderitem.getOrderContent());
                             orderItems.add(clientOrderitem);
                             deskAdapter.notifyDataSetChanged();
                             break;
@@ -185,6 +195,7 @@ public class MainActivity extends Activity implements OrderAdapter.ButtonDelegat
                                     return;
                                 }
                             }
+                            SpeechUtils.speech(severOrderitem.getDeskNum()+severOrderitem.getOrderContent());
                             orderItems.add(severOrderitem);
                             deskAdapter.notifyDataSetChanged();
                             break;
